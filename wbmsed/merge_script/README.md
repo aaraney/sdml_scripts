@@ -1,12 +1,10 @@
----
 author: Austin Raney
 email: aaraney@crimson.ua.edu
 date: "28-11-2018"
----
 
-#merger.sh Read Me File
+# merger.sh Read Me File
 
-##Description:
+## Description:
 	This script uses bash and python to merge WBMsed and USGS gaging site csv files into an analysis ready product.
 
 1. Place both the merger.sh and formatter.py files into a new directory. 
