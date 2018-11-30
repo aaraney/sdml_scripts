@@ -13,7 +13,7 @@ Email: aaraney@crimson.ua.edu
 7. Change directories to the NDHMS folder. `cd wrf_hydro_nwm_public-5.*/trunk/NDHMS/`
 8. Run `./configure` select option 3
 9. Run `rm macros`
-10. Paste `wget link`
+10. Paste `wget https://raw.githubusercontent.com/aaraney/sdml_scripts/master/wrf_hydro/compile_guide/macros`
 11. Run `cp template/setEnvar.sh .`
 12. Open `vim setEnvar.sh` and change `export SPATIAL_SOIL=1` this is if you want that setting.
 13. Run `./compileNoahMP.sh setEnvar.sh`
