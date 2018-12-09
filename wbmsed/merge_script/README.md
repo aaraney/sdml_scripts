@@ -1,6 +1,6 @@
-author: Austin Raney
-email: aaraney@crimson.ua.edu
-date: "28-11-2018"
+author: Austin Raney\
+email: aaraney@crimson.ua.edu\
+date: 28-11-2018
 
 # merger.sh Read Me File
 
