@@ -4,9 +4,9 @@ Email: aaraney@crimson.ua.edu
 # Compiling WRF Hydro v5 on UAHPC
 #### This will also work for compiling NWM on UAHPC
 1. ssh into the UAHPC.
-2. Enter `vim ~/.bashrc`
-3. Append the bashrc file from github to the end of your .bashrc
-4. Run the command `source ~/.bashrc` 
+2. Enter `vim ~/.bash_profile`
+3. Append the bash\_profile file from github to the end of your .bash\_profile
+4. Run the command `source ~/.bash_profile` 
 5. Download WRF Hydro v5 from [source](https://ral.ucar.edu/projects/wrf_hydro/model-code)
 	5. Follow link and right click on the source code download link and copy link.
 	5. Go to ssh session and `wget <paste-link>`
