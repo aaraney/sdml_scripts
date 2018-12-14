@@ -1,9 +1,0 @@
-#  Author: Austin Raney
-#  Date:   2018-12-11
-
-# Append netCDF 4.6.1 and 4.4.4 to path and set path
-use netcdf461Intel
-
-# Append openmpiIntel 3.1.1 to your path. This will also append IntelCompilers2018 
-use openmpiIntel311
-
