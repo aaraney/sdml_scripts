@@ -348,21 +348,14 @@ and will direct you to the most appropriate queue on UAHPC. Here is an
 example of a script file to run WBMsed (sbatch\_owner.sh):
 
 ``` bash
-\#!/bin/bash
-
-\#SBATCH \--job-name=WBMsed
-
-\#SBATCH -n 8
-
-\#SBATCH \--mem=32G
-
-\#SBATCH -p owners
-
-\#SBATCH \--qos scohen2
-
-\#SBATCH \--error=error.%J.txt
-
-\#SBATCH \--output=output.%J.txt
+#!/bin/bash
+#SBATCH \--job-name=WBMsed
+#SBATCH -n 8
+#SBATCH \--mem=32G
+#SBATCH -p owners
+#SBATCH \--qos scohen2
+#SBATCH \--error=error.%J.txt
+#SBATCH \--output=output.%J.txt
 ```
 
 ``` bash
@@ -421,15 +414,21 @@ lower resolution.
 
 To launch the SLURM script, make sure you are in the Scripts directory:
 
-\> cd Scripts
+``` bash
+cd Scripts
+```
 
 Then submit it to the queue:
 
-\> sbatch \< sbatch\_owner.sh
+``` bash
+sbatch \< sbatch\_owner.sh
+```
 
 You can limit the display to just your runs with:
 
-\> squeue --u \<your\_username\>
+``` bash
+squeue --u \<your\_username\>
+```
 
 **3.5. During the simulation --** first the model will create a folder
 named GDS where the intermediate input and output datasets and log files
@@ -441,14 +440,14 @@ year the model will create a new set of input and output files in GDS
 and at the end of the year it will export that year's final output files
 to RGISresults.
 
-**4. Developer guide**
+** 4. Developer guide **
 
 This section will show how to develop the WBM code and how to compile
 new input and output datasets and incorporate them in the model
 simulation. The explanations here are based on my experience from
 developing the WBMsed model.
 
-**4.1 Building and editing a module**
+** 4.1 Building and editing a module **
 
 As in all C programs the first lines in a WBM module are the \#include
 definition. In addition to the standard and general C libraries (e.g.
@@ -460,7 +459,9 @@ the functions and parameters used in WBM.
 After the \#include list we define all the input and output parameters
 ID in the module like this:
 
+``` C
 static int \_MDInDischargeID = MFUnset;
+```
 
 These IDs are used in the WBM functions to query (e.g. MFVarGetFloat)
 and manipulate (e.g. MFVarSetFloat) the model parameters. MFUnset is an
@@ -473,7 +474,7 @@ what we will call **main function** and (2) a **definition**
 '\_MDSedimentFlux**'** and the definition function is called
 **'**MDSedimentFluxDef**'**.
 
-**[The definition function]{.underline}** set the ID of all the input
+** The definition function ** set the ID of all the input
 and output parameters used in the main function. If a parameter (e.g.
 Discharge) is calculated in a different module within the WBM model this
 module is initialized like this:
@@ -501,28 +502,28 @@ where \_MDInAirTempID is the parameter ID variable, MFVarGedID is a WBM
 function that define IDs to input and output parameters. It requires the
 following arguments:
 
-The [first argument]{.underline} is the parameter name. This variable is
+The first argument is the parameter name. This variable is
 what links the module to the simulation shell script (e.g.
 BQARTdaily.sh) input and output list (DATASOURCES and OUTPUTS
 respectively; see section 3 above).
 
-The [second argument]{.underline} is the parameter units (e.g. "degC",
+The second argument is the parameter units (e.g. "degC",
 "km2", "m3/s"). This variable does not seem to have an effect on the
 model run and is for cataloging purposes.
 
-The [third argument]{.underline} can take the following options:
+The third argument can take the following options:
 MFInput- a regular input parameter; MFOutput a regular output parameter;
 MFRoute- the model will accumulate the parameter content in the
 downstream grid cell, so by the time the execution gets to the
 downstream grid cell it already contains the accumulated values from
 upstream.
 
-The [fourth argument]{.underline} affects how temporal disaggregation is
+The fourth argument affects how temporal disaggregation is
 handled. It can take the following options: MFState- the input value is
 passed to the modules as is; MFFlux- the input value is divided by the
 number of days in the input time step.
 
-The [fifth argument]{.underline} affects how a variable is read. It can
+The fifth argument affects how a variable is read. It can
 take the following options: MFBoundary- the parameter is read constantly
 from input, by matching up to the current time step; MFInitial- the
 model forwards to the last time step in the data, reads in the latest
@@ -545,7 +546,7 @@ The final line in a module definition function returns the module main
 output ID (e.g. \_MDOutSedimentFluxID) which was defined in the
 parameters ID definition list above it.
 
-**[The main function]{.underline}** (e.g. \_MDSedimentFlux) is where the
+** The main function (e.g. \_MDSedimentFlux) is where the
 processes are simulated. It gets at least one argument called 'itemID'
 in its definition line:
 
@@ -575,13 +576,13 @@ R = MFVarGetFloat (\_MDInReliefID, itemID, 0.0);
 where R is the relief variable, MFVarGetFloat is a WBM function that
 reads a parameter value. It get the following arguments:
 
-The [first argument]{.underline} is the parameter ID (e.g
+The first argument is the parameter ID (e.g
 \_MDInReliefID). This ID was assigned at the module definition function
 (see above);
 
-The [second argument]{.underline} is the pixel ID (i.e. itemID);
+The second argument is the pixel ID (i.e. itemID);
 
-The [third argument]{.underline} is an initial value (I'm not sure what
+The third argument is an initial value (I'm not sure what
 it's for!).
 
 I can then easily manipulate this variable:
@@ -599,12 +600,12 @@ MFVarSetFloat (\_MDOutQs\_barID, itemID, Qsbar);
 where MFVarSetFloat is a WBM function that set or update a parameter
 value. It gets the following arguments:
 
-The [first argument]{.underline} is the parameter ID (e.g
+The first argument is the parameter ID (e.g
 \_MDOutQs\_barID).
 
-The [second argument]{.underline} is the pixel ID (i.e. itemID);
+The second argument is the pixel ID (i.e. itemID);
 
-The [third argument]{.underline} is the variable that holds the value
+The third argument is the variable that holds the value
 you wish to set (Qsbar).
 
 These get and set operations are also used for bookkeeping purposes. For
@@ -742,7 +743,7 @@ rasters and using RGIS tools. Other tools may be needed for different
 GIS packages and formats. Compilation of a new Network Domain, a static
 input file and (temporally) dynamic input dataset are described.
 
-***4.4.1 Generating new Network Domain Files (from a DEM)***
+**4.4.1 Generating new Network Domain Files (from a DEM)**
 
 Network files in WBMsed controls the simulation domain (stream network)
 and resolution. The WBM framework offer a large number of ready-to-use
@@ -788,7 +789,7 @@ NETVERSION = "NED"
 
 ![](media/image1.png){width="3.254166666666667in" height="1.9in"}
 
-***4.4.2 Generating Static Input File (Relief)***
+**4.4.2 Generating Static Input File (Relief)**
 
 The maximum relief layer is the difference between a pixel local
 topographic elevation (DEM) and the maximum elevation of its upstream
@@ -894,6 +895,7 @@ option is used a txt file with the files' names need to be provided.
 file names for a given year. A python script (grdImport\_FileList.py)
 was used:
 
+``` python
 import datetime
 
 firstYear = 1990
@@ -927,11 +929,13 @@ strDate\[8:10\])
 f.write(fName+\'\\n\')
 
 start += step
+```
 
 **Step 2** -- Run the Convert\_ASCII2RGIS\_Daily.sh script to generate
 the .gdbc.gz flies:
 
-\#!/bin/bash
+``` bash
+#!/bin/bash
 
 if \[ -z \"\$1\" \]; then
 
@@ -979,6 +983,7 @@ setHeader -s Precipitation -d Hawaii \$fname
 setHeader -t \'Hawaii, Precipitation (7.5sec, DaliyTS, \$i)\' \$fname
 
 done
+```
 
 **Step 3** -- Copy the gdbc.gz files to the input directory making sure
 to follow the naming and directory tree structure of WBM. For a
@@ -1007,7 +1012,8 @@ existing module file (e.g. MFDischarge.c) change its file and functions
 (main and definition functions) names and delete most of its code,
 leaving just a couple of parameters and variables:
 
-\#include \<stdio.h\>
+``` C
+#include \<stdio.h\>
 
 \#include \<string.h\>
 
@@ -1057,20 +1063,23 @@ MFDefLeaving (\"SedimentFlux\");
 return (\_MDOutSedimentFluxID);
 
 }
+```
 
 The next step is to add the new definition function to the model header
 file (/Model/WBMplus/include/MD.h):
 
+``` C
 int MDSedimentFluxDef();
 
-Add the input and output parameters to the simulation script file (e.g.
+//Add the input and output parameters to the simulation script file (e.g.
 /Scripts/BQARTdaily.sh) and model header file (MD.h) as described in
 sections 4.2-4.4. In the example above we only need to add the
 MDVarSedimentFlux parameter to the header (MD.h) file:
 
-\#define MDVarSedimentFlux \"SedimentFlux\"
+#define MDVarSedimentFlux \"SedimentFlux\"
+```
 
-and set it as an output in the simulation script file:
+// and set it as an output in the simulation script file:
 
 OUTPUTS\[\${OutNum}\]=\"SedimentFlux\"; ((++OutNum))
 
@@ -1102,7 +1111,9 @@ OPTIONS\[\${OptNum}\]=\"Model sedimentflux\"; (( ++OptNum )):
 
 And add:
 
+``` bash
 OPTIONS\[\${OptNum}\]=\"SedimentFlux calculate\"; (( ++OptNum ))
+```
 
 In the case where the module is **not a new leading module** you only
 need to add an initiation call in a relevant calling module. In the
