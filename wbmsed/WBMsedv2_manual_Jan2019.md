@@ -1,4 +1,4 @@
-# [User and Developer manual to the WBMsed.v2 model]{.underline}
+# User and Developer manual to the WBMsed.v2 model
 
 Sagy Cohen, Surface Dynamics Modeling Lab, University of Alabama
 
@@ -8,15 +8,15 @@ Frances Dunn, University of Southampton
 
 f.dunn\@soton.ac.uk
 
-### *[Document updates:]{.underline}*
+### Document updates:
 
-* *WBMsed.v2 user and developer manual - Sagy Cohen - May-2012*
+* **WBMsed.v2 user and developer manual - Sagy Cohen - May-2012**
 
-* *Update -- Frances Dunn - May-2015*
+* **Update -- Frances Dunn - May-2015**
 
-* *Update (new RGIS)-- Sagy Cohen - Feb-2018 *
+* **Update (new RGIS)-- Sagy Cohen - Feb-2018**
 
-* *Update (input generation; section 4.4)- Sagy Cohen - Jan-2019*
+* **Update (input generation; section 4.4)- Sagy Cohen - Jan-2019**
 
 1\. Introduction
 
@@ -64,40 +64,50 @@ computationally efficient.
 **3.1 Compiling on Linux** (likely by system admin on an institutional
 HPC)
 
-1\. Install udunits, netcdf, cmake using \#\#\#
+1\. Install udunits, netcdf, cmake using your package manager (apt-get, pacman, etc)
 
-2\. Download RGIS from GitHub wither from the website or using the
+2\. Download RGIS from GitHub whether from the website or using the
 terminal:
 
-\> git clone <https://github.com/bmfekete/RGIS> RGIS
+```bash
+git clone <https://github.com/bmfekete/RGIS> RGIS
+```
 
 3\. Navigate (cd) to the downloaded folder and run the install script:
 
-\> ./install \< installation location\>
+```bash
+./install \< installation location\>
+```
 
 4\. If installation was successful it will create a **ghaas** folder with
 the tools (bin) and libraries (lib) and scripts (Scripts).
 
 5\. Add the ghaas path to the .bash\_profile or .profile files:
 
-\> cd \~
+``` bash
+cd \~
+```
 
-\> vi
+```bash
+vi
+```
 
-In ***vi*** add the GHAASDIR definition:
+In **vi** add the GHAASDIR definition:
 
 \[i key to start editing\]
 
-add these lines at the end of the file (adjust the path according to
+Add these lines at the end of the file (adjust the path according to
 your system):
 
-> export GHAASDIR=\"/bighome/scohen2/RGIS/ghaas\"
->
-> export PATH=\"/bighome/scohen2/RGIS/ghaas/bin:\$PATH\"
->
-> use udunits226
->
-> use gcc4.8.4
+``` bash
+export GHAASDIR=\"/bighome/scohen2/RGIS/ghaas\"
+
+export PATH=\"/bighome/scohen2/RGIS/ghaas/bin:\$PATH\"
+
+use udunits226
+
+use gcc4.8.4
+```
 
 \[esc key to exit editing\]
 
@@ -115,25 +125,35 @@ exit vi\]
 
 2\. Install netcdf, cdo, xcode, udunits and openmotif using (e.g.):
 
-\> port install netcdf
+```bash
+port install netcdf
+```
 
 3\. Download RGIS from GitHub wither from the website or using the
 terminal:
 
-\> git clone <https://github.com/bmfekete/RGIS> RGIS
+``` bash
+git clone <https://github.com/bmfekete/RGIS> RGIS
+```
 
 4\. Navigate (cd) to the downloaded folder and run the install script:
 
-\> ./install \< installation location\>
+``` bash
+./install \< installation location\>
+```
 
 5\. If installation was successful it will create a **ghaas** folder with
 the tools (bin) and libraries (lib) and scripts (Scripts).
 
 6\. Add the ghaas path to the .bash\_profile or .profile files:
 
-\> cd \~
+``` bash
+cd \~
+```
 
-\> vi
+``` bash
+vi
+```
 
 In ***vi*** add the GHAASDIR definition:
 
@@ -142,8 +162,10 @@ In ***vi*** add the GHAASDIR definition:
 add these lines at the end of the file (adjust the path according to
 your system):
 
+``` bash
 export
 PATH=\"/usr/local/share/ghaas/bin:/usr/local/share/ghaas/f:\$PATH\"export
+```
 
 \[esc key to exit editing\]
 
@@ -173,9 +195,11 @@ To compile the code (will only work if RGIS is installed):
 
 Navigate to the model directory:
 
-\> cd /grps1/scohen2/WBMsed\_runs/WBMsed3.3/Model/WBMplus
+``` bash
+cd /grps1/scohen2/WBMsed\_runs/WBMsed3.3/Model/WBMplus
 
-\> make
+make
+```
 
 A successful compilation will create a new wbmplus.bin file in
 Model/WBMplus/bin
