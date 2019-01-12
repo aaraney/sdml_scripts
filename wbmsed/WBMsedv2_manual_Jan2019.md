@@ -760,7 +760,9 @@ Tool)
 
 In Terminal:
 
-\> netImportASCII \<flowdir.asc\> \<output.gdbn.gz\>
+``` bash
+netImportASCII \<flowdir.asc\> \<output.gdbn.gz\>
+```
 
 In RGIS GUI: Tools -\> Import -\> Network Grid
 
