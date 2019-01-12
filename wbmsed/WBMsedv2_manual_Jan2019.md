@@ -325,7 +325,9 @@ script with a text editor (e.g. TextWrangler). If you create a new shell
 script you will probably need to define its permissions. You do so with
 the chmod command:
 
-\> chmod 755 filename.sh
+``` bash
+chmod 755 filename.sh
+```
 
 **3.4. Launching the model --** when you log into UAHPC you start in its
 headnode. DO NOT run long or heavy calculations on the headnode as it
@@ -336,13 +338,16 @@ controlling your simulation (see:
 
 Go to the Scripts directory:
 
-\> cd \<name of simulation directory\>/Scripts
+``` bash
+cd \<name of simulation directory\>/Scripts
+```
 
 Alter the SLURM script file (sbatch\_owner.sh) to suit your simulation.
 The script file allows you to define a number of simulation parameters
 and will direct you to the most appropriate queue on UAHPC. Here is an
 example of a script file to run WBMsed (sbatch\_owner.sh):
 
+``` bash
 \#!/bin/bash
 
 \#SBATCH \--job-name=WBMsed
@@ -358,8 +363,11 @@ example of a script file to run WBMsed (sbatch\_owner.sh):
 \#SBATCH \--error=error.%J.txt
 
 \#SBATCH \--output=output.%J.txt
+```
 
+``` bash
 ./WBMsed\_monthly.sh Global 06min dist
+```
 
 The \#SBATCH notation define the different options for the simulation:
 
